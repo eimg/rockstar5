@@ -1,36 +1,19 @@
 import React from 'react';
-
-class Item extends React.Component {
-    render() {
-        return (
-            <li>
-                {this.props.item.name}
-                <a href='#/' onClick={() => {
-                    this.props.remove(this.props.item._id)
-                }}>&times;</a>
-            </li>
-        )
-    }
-}
+import Item from './Item';
 
 class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            data: [
-                { '_id': 1, 'name': 'Alice' },
-                { '_id': 2, 'name': 'Bob' },
-            ]
-        }
+    state = {
+        data: [
+            { '_id': 1, 'name': 'Alice' },
+            { '_id': 2, 'name': 'Bob' },
+        ]
+    };
 
-        this.autoid = this.state.data.length;
+    input = React.createRef();
 
-        this.input = React.createRef();
-        this.add = this.add.bind(this);
-        this.remove = this.remove.bind(this);
-    }
+    autoid = this.state.data.length;
 
-    add() {
+    add = () => {
         var data = this.state.data;
         var name = this.input.current.value;
         data.push({ '_id': ++this.autoid, 'name': name });
@@ -39,7 +22,7 @@ class App extends React.Component {
         });
     }
 
-    remove(_id) {
+    remove = _id => {
         var data = this.state.data.filter(item => item._id !== _id);
         this.setState({
             data: data

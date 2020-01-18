@@ -13,7 +13,8 @@ const Item = ({ item, remove, toggle }) => (
         <ListItemIcon>
             <Checkbox
                 checked={item.status}
-                onChange={toggle(item._id)}  />
+                onChange={toggle(item._id)}
+            />
         </ListItemIcon>
         <ListItemText primary={item.subject} />
         <ListItemSecondaryAction>

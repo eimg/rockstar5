@@ -11,7 +11,7 @@ import ListIcon from '@material-ui/icons/List';
 
 const styles = {
     title: {
-        marginLeft: 20
+        marginLeft: 20,
     }
 }
 

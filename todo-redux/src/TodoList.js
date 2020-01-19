@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./Item";
+import { connect } from "react-redux";
 
 class TodoList extends React.Component {
     render() {
@@ -20,4 +21,10 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList;
+const NewTodoList = connect(state => {
+    return {
+        items: state.filter(item => item.status === 0)
+    }
+}, null)(TodoList);
+
+export default NewTodoList;

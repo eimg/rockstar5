@@ -4,31 +4,36 @@ import DoneList from "./DoneList";
 
 class App extends React.Component {
     state = {
-        items: [
-            { _id: '1', subject: 'Milk', status: 0},
-            { _id: '2', subject: 'Butter', status: 1},
-            { _id: '3', subject: 'Egg', status: 0},
-            { _id: '4', subject: 'Bread', status: 1},
-        ]
+        items: []
     };
 
     input = React.createRef();
     autoid = this.state.items.length;
+    api = "http://localhost:8000/tasks";
+
+    componentDidMount() {
+        fetch(this.api).then(res => res.json()).then(items => {
+            this.setState({ items });
+        });
+    }
 
     add = () => {
-        this.setState({
-            items: [
-                ...this.state.items,
-                {
-                    _id: ++this.autoid + '',
-                    subject: this.input.current.value,
-                    status: 0,
-                }
-            ]
-        })
+        fetch(this.api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ subject: this.input.current.value })
+        }).then(res => res.json()).then(item => {
+            this.setState({
+                items: [ ...this.state.items, item ]
+            });
+        });
     }
 
     remove = _id => {
+        fetch(`${this.api}/${_id}`, { method: 'DELETE' });
+
         this.setState({
             items: this.state.items.filter(item => item._id !== _id)
         });
@@ -37,7 +42,18 @@ class App extends React.Component {
     toggle = _id => {
         this.setState({
             items: this.state.items.map(item => {
-                if(item._id === _id) item.status = +!item.status;
+                if(item._id === _id) {
+                    item.status = +!item.status;
+
+                    fetch(`${this.api}/${_id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: item.status })
+                    });
+                }
+
                 return item;
             })
         })

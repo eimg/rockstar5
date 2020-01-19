@@ -1,5 +1,6 @@
 import React from "react";
 import Item from "./Item";
+import { connect } from "react-redux";
 
 const styles = {
     done: {
@@ -27,4 +28,10 @@ class DoneList extends React.Component {
     }
 }
 
-export default DoneList;
+const NewDoneList = connect(state => {
+    return {
+        items: state.filter(item => item.status === 1)
+    }
+}, null)(DoneList);
+
+export default NewDoneList;

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 class Item extends React.Component {
     render() {
@@ -20,4 +21,11 @@ class Item extends React.Component {
     }
 }
 
-export default Item;
+const NewItem = connect(null, dispatch => {
+    return {
+        remove: _id => dispatch({ type: 'DELETE', _id }),
+        toggle: _id => dispatch({ type: 'TOGGLE', _id }),
+    }
+})(Item);
+
+export default NewItem;

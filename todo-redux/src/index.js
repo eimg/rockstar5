@@ -6,14 +6,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-var autoid = 0;
 var store = createStore(function(state = [], action) {
     switch(action.type) {
         case "ADD":
-            return [
-                ...state,
-                { _id: ++autoid, subject: action.subject, status: 0 }
-            ];
+            return [ ...state, action.item ];
         case "DELETE":
             return state.filter(item => item._id !== action._id);
         case "TOGGLE":
@@ -28,8 +24,12 @@ var store = createStore(function(state = [], action) {
     }
 });
 
-store.dispatch({ type: "ADD", subject: "Egg" });
-store.dispatch({ type: "ADD", subject: "Milk" });
+var api = "http://localhost:8000/tasks";
+fetch(api).then(res => res.json()).then(items => {
+    items.map(item => {
+        store.dispatch({ type: "ADD", item });
+    })
+});
 
 ReactDOM.render(
     <Provider store={store}>

@@ -8,6 +8,9 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+var cors = require("cors");
+app.use(cors());
+
 app.get('/tasks', function(req, res) {
     db.tasks.find(function(err, data) {
         res.status(200).json(data);
@@ -54,13 +57,13 @@ app.delete('/tasks', function(req, res) {
 // -d status=1
 app.put('/tasks/:id', function(req, res) {
     var status = req.body.status;
-    if(status !== "1" && status !== "0") {
+    if(status !== 1 && status !== 0) {
         return res.status(400).json({ msg: "Incorrect status" });
     }
 
     db.tasks.update(
         { _id: mongojs.ObjectID(req.params.id) },
-        { $set: { status: parseInt(status) } },
+        { $set: { status: status } },
         { multi: false },
         function(err, data) {
             res.status(200).json(data);

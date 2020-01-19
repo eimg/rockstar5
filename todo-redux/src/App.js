@@ -13,16 +13,8 @@ class App extends React.Component {
                     React Todo
                     ({this.props.count})
                 </h1>
-                <TodoList
-                    items={this.props.todo}
-                    remove={this.props.remove}
-                    toggle={this.props.toggle}
-                />
-                <DoneList
-                    items={this.props.done}
-                    remove={this.props.remove}
-                    toggle={this.props.toggle}
-                />
+                <TodoList />
+                <DoneList />
                 <div>
                     <input type="text" ref={this.input} />
                     <button onClick={() => {
@@ -38,15 +30,11 @@ class App extends React.Component {
 
 var ReduxApp = connect(state => {
     return {
-        todo: state.filter(item => item.status === 0),
-        done: state.filter(item => item.status === 1),
         count: state.filter(item => item.status === 0).length,
     };
 }, dispatch => {
     return {
         add: subject => dispatch({ type: 'ADD', subject }),
-        remove: _id => dispatch({ type: 'DELETE', _id }),
-        toggle: _id => dispatch({ type: 'TOGGLE', _id }),
         clear: () => dispatch({ type: 'CLEAR' }),
     }
 })(App);

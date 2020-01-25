@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="js/babel.min.js"></script>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+
+    <script type="text/babel">
+        const MyContext = React.createContext("Default Value");
+
+        const App = props => (
+            <Header />
+        );
+
+        const Header = props => (
+            <div><Title /></div>
+        );
+
+        const Title = props => {
+            const value = React.useContext(MyContext);
+            return <h1>{value}</h1>;
+        };
+
+        ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>

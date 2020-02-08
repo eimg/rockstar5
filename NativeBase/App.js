@@ -15,6 +15,7 @@ import {
     Separator,
     Item,
     Input,
+    Accordion,
 } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,9 +24,9 @@ class App extends React.Component {
     state = {
         isReady: false,
         items: [
-            { _id: '1', subject: 'Native Base', status: 0 },
-            { _id: '2', subject: 'Elements', status: 0 },
-            { _id: '3', subject: 'RNDS', status: 1 },
+            { _id: '1', subject: 'Native Base', status: 0, content: 'Some content' },
+            { _id: '2', subject: 'Elements', status: 0, content: 'More content' },
+            { _id: '3', subject: 'RNDS', status: 1, content: 'Other content' },
         ],
         input: ''
     };
